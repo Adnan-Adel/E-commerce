@@ -1,0 +1,55 @@
+<h2 class="text-center text-green-700 text-4xl">Login Now </h2>
+
+<div class="w-9/12 mx-auto">
+    <form [formGroup]="loginForm" (ngSubmit)="submitForm()" class="my-4">
+
+        <div class="mb-3">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-green-700">email: </label>
+            <input formControlName="email" type="email"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" />
+
+            @if(loginForm.get('email')?.errors && loginForm.get('email')?.touched) {
+                @if(loginForm.get('email')?.getError('required')) {
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                        role="alert">
+                        <span class="font-medium">Required!</span> you should enter an email.
+                    </div>
+                }
+                @else if (loginForm.get('email')?.getError('email')) {
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                        role="alert">
+                        <span class="font-medium">Wrong Email!</span> please, enter a valid email.
+                    </div>
+                }
+            }
+
+        </div>
+        <div class="mb-3">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-green-700">password: </label>
+            <input formControlName="password" type="password"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" />
+
+            @if(loginForm.get('password')?.errors && loginForm.get('password')?.touched) {
+                @if(loginForm.get('password')?.getError('required')) {
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                        role="alert">
+                        <span class="font-medium">Required!</span> you should enter a password.
+                    </div>
+                }
+                @else if (loginForm.get('password')?.getError('pattern')) {
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                        role="alert">
+                        <span class="font-medium">Wrong password!</span> password starts with a capital letter followed by a
+                        small letter followed by 6 digits.
+                    </div>
+                }
+            }
+
+        </div>
+
+
+        <button type="submit" [disabled]="!loginForm.valid"
+            class="p-2 cursor-pointer disabled:bg-green-300 disabled:cursor-not-allowed rounded text-white bg-green-700">Login
+            @if(isLoading()){<i class="fa-solid fa-spinner fa-spin"></i>}</button>
+    </form>
+</div>
