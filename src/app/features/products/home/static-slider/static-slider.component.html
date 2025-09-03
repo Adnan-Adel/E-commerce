@@ -1,0 +1,22 @@
+<div class="flex w-full h-[600px] mx-auto shadow-lg rounded-lg overflow-hidden">
+    <!-- Left (Slider - 75%) -->
+    <div class="w-3/4 bg-gray-100 flex items-center justify-center">
+        <owl-carousel-o [options]="customOptions" class="w-full h-full">
+            <ng-template carouselSlide>
+                <img src="/images/slider-image-1.jpeg" alt="" class="w-full h-full object-cover">
+            </ng-template>
+            <ng-template carouselSlide>
+                <img src="/images/slider-image-2.jpeg" alt="" class="w-full h-full object-cover">
+            </ng-template>
+            <ng-template carouselSlide>
+                <img src="/images/slider-image-3.jpeg" alt="" class="w-full h-full object-cover">
+            </ng-template>
+        </owl-carousel-o>
+    </div>
+
+    <!-- Right (Images - 25%) -->
+    <div class="w-1/4 flex flex-col">
+        <img src="/images/grocery-banner.png" alt="" class="w-full h-1/2 object-cover">
+        <img src="/images/grocery-banner.png" alt="" class="w-full h-1/2 object-cover">
+    </div>
+</div>

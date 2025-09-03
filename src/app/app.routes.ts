@@ -3,21 +3,29 @@ import { RegisterComponent } from './features/auth/register/register.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { HomeComponent } from './features/products/home/home.component';
 import { CartComponent } from './features/products/cart/cart.component';
-import { ProductsComponent } from './features/products/products/products.component';
 import { BrandsComponent } from './features/products/brands/brands.component';
 import { ProductDetailsComponent } from './features/products/product-details/product-details.component';
 import { CategoriesComponent } from './features/products/categories/categories.component';
 import { NotFoundComponent } from './layout/not-found/not-found.component';
+import { authGuard } from './core/guard/auth.guard';
+import { ProductsSharedComponent } from './shared/components/products-shared/products-shared.component';
 
 export const routes: Routes = [
     {path:"", redirectTo:"register", pathMatch:'full'},
     {path:"register",   component:RegisterComponent,            title:"Register"},
     {path:"login",      component:LoginComponent,               title:"Login"},
-    {path:"home",       component:HomeComponent,                title:"Home"},
-    {path:"cart",       component:CartComponent,                title:"Cart"},
-    {path:"products",   component:ProductsComponent,            title:"Products"},
-    {path:"brands",     component:BrandsComponent,              title:"Brands"},
-    {path:"categories", component:CategoriesComponent,          title:"Categories"},
-    {path:"details",    component:ProductDetailsComponent,      title:"Product Details"},
+    {path:"home",       component:HomeComponent,                title:"Home",
+        canActivate : [authGuard]
+    },
+    {path:"cart",       component:CartComponent,                title:"Cart",
+        canActivate : [authGuard]},
+    {path:"products",   component:ProductsSharedComponent,            title:"Products",
+        canActivate : [authGuard]},
+    {path:"brands",     component:BrandsComponent,              title:"Brands",
+        canActivate : [authGuard]},
+    {path:"categories", component:CategoriesComponent,          title:"Categories",
+        canActivate : [authGuard]},
+    {path:"details/:pId",    component:ProductDetailsComponent,      title:"Product Details",
+        canActivate : [authGuard]},
     {path:"**",         component:NotFoundComponent,            title:"not found"}
 ];

@@ -1,0 +1,7 @@
+<p class="text-3xl text-green-700 font-semibold my-3">Popula Products:</p>
+
+<div class="parent grid grid-cols-6 gap-3">
+    @for (item of products; track item.id) {
+        <app-card [product]="item"></app-card>
+    }
+</div>
