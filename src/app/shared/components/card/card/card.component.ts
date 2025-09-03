@@ -1,6 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Product } from '../../../../core/interfaces/product';
 import { RouterLink } from '@angular/router';
+import { CartService } from '../../../../core/services/cart/cart.service';
+import { ToastrService } from 'ngx-toastr';
+
+
 
 @Component({
   selector: 'app-card',
@@ -9,5 +13,21 @@ import { RouterLink } from '@angular/router';
   styleUrl: './card.component.scss'
 })
 export class CardComponent {
-  @Input() product : Product = {} as Product;
+  private cartService: CartService = inject(CartService);
+  private toastr: ToastrService = inject(ToastrService);
+
+  @Input() product: Product = {} as Product;
+
+  addProduct(pId: string) {
+    this.cartService.addToCart(pId).subscribe({
+      next: (res) => {
+        this.toastr.success(res.message, 'cart operation!',{
+          closeButton:true
+        })
+      },
+      error: (err) => {
+
+      }
+    });
+  }
 }
