@@ -1,16 +1,19 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth/auth.service';
+import { TranslatePipe, TranslateDirective, TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink],
+  imports: [RouterLink, TranslatePipe],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
   private auth: AuthService = inject(AuthService);
   private router: Router = inject(Router);
+  private translate = inject(TranslateService);
 
   isLoggedIn = signal<boolean>(false);
 
@@ -43,5 +46,18 @@ export class NavbarComponent {
 
     // route to login
     this.router.navigate(['/login']);
+  }
+
+  useLanguage(language: string): void {
+    this.translate.use(language);
+
+    localStorage.setItem('lang', language);
+
+    if(language == "en") {
+      document.body.dir = "ltr";
+    }
+    else if(language == "ar") {
+      document.body.dir = "rtl";
+    }
   }
 }

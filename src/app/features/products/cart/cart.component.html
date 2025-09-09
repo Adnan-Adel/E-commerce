@@ -76,9 +76,16 @@
             Total Price: <span class="ml-2">{{ totalPrice() }} EGP</span>
         </h2>
 
-        <button (click)="clearCart()"
-            class="px-4 cursor-pointer py-2 rounded-lg text-sm font-medium text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-            Clear Cart
-        </button>
+        <div class="flex gap-3">
+            <button (click)="clearCart()"
+                class="px-4 cursor-pointer py-2 rounded-lg text-sm font-medium text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                Clear Cart
+            </button>
+
+            <button (click)="reqCheckout()"
+                class="px-4 cursor-pointer py-2 rounded-lg text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
+                Proceed to Checkout
+            </button>
+        </div>
     </div>
 </div>

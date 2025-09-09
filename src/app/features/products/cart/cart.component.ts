@@ -1,6 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { CartService } from '../../../core/services/cart/cart.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-cart',
@@ -11,9 +13,11 @@ import { ToastrService } from 'ngx-toastr';
 export class CartComponent {
   private cartService: CartService = inject(CartService);
   private toastr: ToastrService = inject(ToastrService);
+  private router: Router = inject(Router);
 
   cartProducts = signal<any[]>([]);
   totalPrice = signal<any[]>([]);
+  cartId = signal<any[]>([]);
 
   ngOnInit(): void {
     this.getCartData();
@@ -36,6 +40,7 @@ export class CartComponent {
       next: (res) => {
         this.cartProducts.set(res.data.products);
         this.totalPrice.set(res.data.totalCartPrice);
+        this.cartId.set(res.cartId);
       },
       error: (err) => {
         console.log(err);
@@ -72,6 +77,10 @@ export class CartComponent {
         }
       })
     }
+  }
+
+  reqCheckout() {
+    this.router.navigate(['/order', this.cartId()]);
   }
 
 }

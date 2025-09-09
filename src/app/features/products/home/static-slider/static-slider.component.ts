@@ -17,6 +17,7 @@ export class StaticSliderComponent {
     pullDrag: false,
     dots: true,
     navSpeed: 700,
+    rtl: true,
     navText: ['', ''],
     responsive: {
       0: {

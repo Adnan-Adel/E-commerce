@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
 import { jwtDecode } from "jwt-decode";
 import { User } from '../../interfaces/user';
+import { PlatformService } from '../platform/platform.service';
 
 
 @Injectable({
@@ -12,8 +13,17 @@ import { User } from '../../interfaces/user';
 export class AuthService {
   
   private httpClient : HttpClient = inject(HttpClient);
+  private platformService : PlatformService = inject(PlatformService);
   
-  userData = new BehaviorSubject(null);
+  userData = new BehaviorSubject<any>(null);
+
+  constructor() {
+    if(this.platformService.checkPlatformBrowser()) {
+      if(localStorage.getItem('userToken')) {
+        this.setUserData();
+      }
+    }
+  }
 
   registerAPI(registerData: object):Observable<any> {
     return this.httpClient.post(`${environment.baseURL}auth/signup`, registerData);
@@ -28,6 +38,8 @@ export class AuthService {
     if(token) {
       this.userData.next(jwtDecode(token));
     }
-
+    else {
+      this.userData.next(null);
+    }
   }
 }

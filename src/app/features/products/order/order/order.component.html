@@ -1,0 +1,66 @@
+<form [formGroup]="addressForm" (ngSubmit)="checkout()" class="my-4">
+    <div class="mb-3">
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-green-700">details: </label>
+        <input formControlName="details" type="text"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" />
+
+        @if(addressForm.get('details')?.errors && addressForm.get('details')?.touched) {
+            @if(addressForm.get('details')?.getError('required')) {
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-medium">Required!</span> you should enter details.
+                </div>
+            }
+            @else if (addressForm.get('details')?.getError('maxlength')) {
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-medium">Too Long!</span> max length of details is 200 chars.
+                </div>
+            }
+        }
+
+    </div>
+
+    <div class="mb-3">
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-green-700">phone: </label>
+        <input formControlName="phone" type="tel"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" />
+
+        @if(addressForm.get('phone')?.errors && addressForm.get('phone')?.touched) {
+            @if(addressForm.get('phone')?.getError('required')) {
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-medium">Required!</span> you should enter a phone.
+                </div>
+            }
+            @else if (addressForm.get('phone')?.getError('pattern')) {
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-medium">Wrong phone number!</span> Enter a valid phone number.
+                </div>
+            }
+        }
+
+    </div>
+
+    <div class="mb-3">
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-green-700">city: </label>
+        <input formControlName="city" type="text"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" />
+
+        @if(addressForm.get('city')?.errors && addressForm.get('city')?.touched) {
+            @if(addressForm.get('city')?.getError('required')) {
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-medium">Required!</span> you should enter city.
+                </div>
+            }
+            @else if (addressForm.get('city')?.getError('maxlength')) {
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-medium">Too Long!</span> max length of city name is 50 chars.
+                </div>
+            }
+        }
+
+    </div>
+
+    <button type="submit"
+        class="p-2 cursor-pointer disabled:bg-green-300 disabled:cursor-not-allowed rounded text-white bg-green-700">
+        Checkout
+    </button>
+</form>

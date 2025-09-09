@@ -9,6 +9,8 @@ import { CategoriesComponent } from './features/products/categories/categories.c
 import { NotFoundComponent } from './layout/not-found/not-found.component';
 import { authGuard } from './core/guard/auth.guard';
 import { ProductsSharedComponent } from './shared/components/products-shared/products-shared.component';
+import { OrderComponent } from './features/products/order/order/order.component';
+import { AllordersComponent } from './features/products/order/allorders/allorders.component';
 
 export const routes: Routes = [
     {path:"", redirectTo:"register", pathMatch:'full'},
@@ -26,6 +28,10 @@ export const routes: Routes = [
     {path:"categories", component:CategoriesComponent,          title:"Categories",
         canActivate : [authGuard]},
     {path:"details/:pId",    component:ProductDetailsComponent,      title:"Product Details",
+        canActivate : [authGuard]},
+    {path:"order/:cartId",    component:OrderComponent,      title:"Order",
+        canActivate : [authGuard]},
+    {path:"allorders",    component:AllordersComponent,      title:"All Orders",
         canActivate : [authGuard]},
     {path:"**",         component:NotFoundComponent,            title:"not found"}
 ];
