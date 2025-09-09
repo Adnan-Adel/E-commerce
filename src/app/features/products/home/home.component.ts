@@ -4,6 +4,8 @@ import { ProductsSliderComponent } from "./products-slider/products-slider.compo
 import { ProductsSharedComponent } from "../../../shared/components/products-shared/products-shared.component";
 import { ProductService } from '../../../core/services/product/product.service';
 import { Product } from '../../../core/interfaces/product';
+import { RxjsTestService } from '../../../core/services/rxjs/rxjs-test.service';
+
 
 @Component({
   selector: 'app-home',
@@ -14,9 +16,10 @@ import { Product } from '../../../core/interfaces/product';
 export class HomeComponent {
   allProducts = signal<Product[]>([]);
   private productService : ProductService = inject(ProductService);
+  private rxjsTestService : RxjsTestService = inject(RxjsTestService);
 
   ngOnInit() {
-    this.productService.getAllProducts().subscribe({
+    this.rxjsTestService.getProductsWithShareReply().subscribe({
       next : (res)=> {
         this.allProducts.set(res.data);
         console.log(res);
