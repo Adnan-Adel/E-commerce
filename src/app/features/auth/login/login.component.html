@@ -48,8 +48,18 @@
         </div>
 
 
+    <div class="flex gap-4 mt-4">
         <button type="submit" [disabled]="!loginForm.valid"
-            class="p-2 cursor-pointer disabled:bg-green-300 disabled:cursor-not-allowed rounded text-white bg-green-700">Login
-            @if(isLoading()){<i class="fa-solid fa-spinner fa-spin"></i>}</button>
+            class="p-2 cursor-pointer disabled:bg-green-300 disabled:cursor-not-allowed rounded text-white bg-green-700">
+            Login
+            @if(isLoading()){<i class="fa-solid fa-spinner fa-spin"></i>}
+        </button>
+
+        <button type="button" (click)="forgotPassword()"
+            class="p-2 cursor-pointer rounded text-white bg-red-600 hover:bg-red-700">
+            Forgot Password
+        </button>
+    </div>
+
     </form>
 </div>

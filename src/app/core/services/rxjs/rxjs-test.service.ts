@@ -11,6 +11,8 @@ export class RxjsTestService {
   private httpClient: HttpClient = inject(HttpClient);
 
   private $products: Observable<any> | null = null;
+  private $brands: Observable<any> | null = null;
+  private $categories: Observable<any> | null = null;
 
   constructor() { }
 
@@ -63,6 +65,22 @@ export class RxjsTestService {
       )
     }
     return this.$products;
+  }
+  getBrandsWithShareReply(): Observable<any> {
+    if (!this.$brands) {
+      this.$brands = this.httpClient.get<any>(`${environment.baseURL}brands`).pipe(
+        shareReplay(1)
+      )
+    }
+    return this.$brands;
+  }
+  getCategoriesWithShareReply(): Observable<any> {
+    if (!this.$categories) {
+      this.$categories = this.httpClient.get<any>(`${environment.baseURL}categories`).pipe(
+        shareReplay(1)
+      )
+    }
+    return this.$categories;
   }
 
   getProductsRetry3TimesBeforeFaild(): Observable<any> {

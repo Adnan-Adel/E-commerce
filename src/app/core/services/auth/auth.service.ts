@@ -11,35 +11,52 @@ import { PlatformService } from '../platform/platform.service';
   providedIn: 'root'
 })
 export class AuthService {
-  
-  private httpClient : HttpClient = inject(HttpClient);
-  private platformService : PlatformService = inject(PlatformService);
-  
+
+  private httpClient: HttpClient = inject(HttpClient);
+  private platformService: PlatformService = inject(PlatformService);
+
   userData = new BehaviorSubject<any>(null);
 
   constructor() {
-    if(this.platformService.checkPlatformBrowser()) {
-      if(localStorage.getItem('userToken')) {
+    if (this.platformService.checkPlatformBrowser()) {
+      if (localStorage.getItem('userToken')) {
         this.setUserData();
       }
     }
   }
 
-  registerAPI(registerData: object):Observable<any> {
+  registerAPI(registerData: object): Observable<any> {
     return this.httpClient.post(`${environment.baseURL}auth/signup`, registerData);
   }
 
-  loginAPI(registerData: object):Observable<any> {
+  loginAPI(registerData: object): Observable<any> {
     return this.httpClient.post(`${environment.baseURL}auth/signin`, registerData);
   }
 
   setUserData() {
     let token = localStorage.getItem('userToken');
-    if(token) {
+    if (token) {
       this.userData.next(jwtDecode(token));
     }
     else {
       this.userData.next(null);
     }
+  }
+
+  forgotPassword(userEmail: string): Observable<any> {
+    return this.httpClient.post(`${environment.baseURL}auth/forgotPasswords`, {
+      "email": userEmail
+    })
+  }
+  verifyResetCode(resetCode: string): Observable<any> {
+    return this.httpClient.post(`${environment.baseURL}auth/verifyResetCode`, {
+      "resetCode": resetCode
+    })
+  }
+  resetPassword(userEmail: string, newPassword: string): Observable<any> {
+    return this.httpClient.put(`${environment.baseURL}auth/resetPassword`, {
+      "email": userEmail,
+      "newPassword": newPassword
+    })
   }
 }

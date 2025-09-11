@@ -1,0 +1,17 @@
+<h2 class="text-center text-green-700 text-4xl">Verify Code</h2>
+
+<div class="w-9/12 mx-auto">
+    <form [formGroup]="verifyForm" (ngSubmit)="submitForm()" class="my-4">
+        <div class="mb-3">
+            <label class="block mb-2 text-sm font-medium text-gray-900">Verification Code:</label>
+            <input formControlName="resetCode" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+             focus:ring-green-500 focus:border-green-500 block w-full p-2.5" />
+        </div>
+
+        <div class="flex gap-4 mt-4">
+            <button type="submit" class="p-2 cursor-pointer rounded text-white bg-green-700">
+                Verify
+            </button>
+        </div>
+    </form>
+</div>

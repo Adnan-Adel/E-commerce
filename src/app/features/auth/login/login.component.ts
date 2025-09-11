@@ -50,4 +50,9 @@ export class LoginComponent {
       })
     }
   }
+
+  forgotPassword() {
+    // route to forget password
+    this.router.navigate(['/forget-password'])
+  }
 }
