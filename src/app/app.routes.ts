@@ -17,8 +17,11 @@ import { WishlistComponent } from './features/products/wishlist/wishlist/wishlis
 import { ForgetPasswordComponent } from './features/auth/forgetPassword/forget-password/forget-password.component';
 import { VerifyCodeComponent } from './features/auth/forgetPassword/verify-code/verify-code.component';
 import { ResetPasswordComponent } from './features/auth/forgetPassword/reset-password/reset-password.component';
+import { PlatformService } from './core/services/platform/platform.service';
+import { inject } from '@angular/core';
 
-export const routes: Routes = [
+const platformService: PlatformService = inject(PlatformService);
+let routes: Routes = [
     { path: "", redirectTo: "register", pathMatch: 'full' },
     { path: "register", component: RegisterComponent, title: "Register" },
     { path: "login", component: LoginComponent, title: "Login" },
@@ -55,23 +58,13 @@ export const routes: Routes = [
     {
         path: "reset-password", component: ResetPasswordComponent, title: "Reset Password"
     },
+    // {
+    //     path: "details/:pId", component: ProductDetailsComponent, title: "Product Details",
+    //     canActivate: [authGuard]
+    // },
     {
-        path: 'details/:pId',
-        loadComponent: () =>
-            import('./features/products/product-details/product-details.component')
-                .then(m => m.ProductDetailsComponent),
-        canActivate: [authGuard],
-        title: "Product Details",
-        data: { prerender: false }
-    },
-    {
-        path: "order/:cartId",
-        loadComponent: () =>
-            import('./features/products/order/order/order.component')
-                .then(m => m.OrderComponent),
-        title: "Order",
-        canActivate: [authGuard],
-        data: { prerender: false }
+        path: "order/:cartId", component: OrderComponent, title: "Order",
+        canActivate: [authGuard]
     },
     {
         path: "allorders", component: AllordersComponent, title: "All Orders",
@@ -79,3 +72,14 @@ export const routes: Routes = [
     },
     { path: "**", component: NotFoundComponent, title: "not found" }
 ];
+
+if (platformService.checkPlatformBrowser()) {
+    routes.push({
+        path: "details/:pId",
+        component: ProductDetailsComponent,
+        title: "Product Details",
+        canActivate: [authGuard]
+    });
+}
+
+export { routes };
