@@ -56,12 +56,22 @@ export const routes: Routes = [
         path: "reset-password", component: ResetPasswordComponent, title: "Reset Password"
     },
     {
-        path: "details/:pId", component: ProductDetailsComponent, title: "Product Details",
-        canActivate: [authGuard]
+        path: 'details/:pId',
+        loadComponent: () =>
+            import('./features/products/product-details/product-details.component')
+                .then(m => m.ProductDetailsComponent),
+        canActivate: [authGuard],
+        title: "Product Details",
+        data: { prerender: false }
     },
     {
-        path: "order/:cartId", component: OrderComponent, title: "Order",
-        canActivate: [authGuard]
+        path: "order/:cartId",
+        loadComponent: () =>
+            import('./features/products/order/order/order.component')
+                .then(m => m.OrderComponent),
+        title: "Order",
+        canActivate: [authGuard],
+        data: { prerender: false }
     },
     {
         path: "allorders", component: AllordersComponent, title: "All Orders",
