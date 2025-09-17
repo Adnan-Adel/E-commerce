@@ -21,7 +21,7 @@ export class CardComponent {
 
   @Input() product: Product = {} as Product;
 
-  isInWishlist = signal(false);
+  // isInWishlist = signal(false);
 
   addProduct(pId: string) {
     this.cartService.addToCart(pId).subscribe({
@@ -37,21 +37,22 @@ export class CardComponent {
   }
 
   toggleWishlist(pId: string) {
-    if (this.isInWishlist()) {
+    if (this.wishlistService.isInWishlist(pId)) {
       this.wishlistService.removeFromWishlist(pId).subscribe({
-        next:()=>{
-          this.isInWishlist.set(false);
+        next: () => {
           this.toastr.info('Removed from wishlist', 'Wishlist');
         }
-      })  
-    }
-    else {
+      });
+    } else {
       this.wishlistService.addToWishlist(pId).subscribe({
-        next:()=>{
-          this.isInWishlist.set(true);
-          this.toastr.info('Added to wishlist', 'Wishlist');
+        next: () => {
+          this.toastr.success('Added to wishlist', 'Wishlist');
         }
-      })
+      });
     }
+  }
+
+  isInWishlist() {
+    return this.wishlistService.isInWishlist(this.product.id);
   }
 }

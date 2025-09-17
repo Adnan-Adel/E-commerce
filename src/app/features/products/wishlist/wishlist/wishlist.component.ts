@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { WishlistService } from '../../../../core/services/wishlist/wishlist.service';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../../../../core/services/cart/cart.service';
@@ -15,6 +15,7 @@ export class WishlistComponent {
   private toastr: ToastrService = inject(ToastrService);
 
   wishlist = signal<any[]>([]);
+
 
   ngOnInit(): void {
     this.loadWishlist();
@@ -47,7 +48,7 @@ export class WishlistComponent {
     this.cartService.addToCart(pId).subscribe({
       next: () => {
         this.toastr.success('Item moved to cart');
-        this.removeItem(pId); // remove it from wishlist after adding to cart
+        this.removeItem(pId);
       },
       error: () => {
         this.toastr.error('Failed to add item to cart');

@@ -48,18 +48,14 @@
             In Stock ({{ product().quantity }})
         </span>
 
-        <!-- Action Buttons -->
         <div class="flex items-center space-x-4">
             <input type="number" value="1" min="1"
                 class="w-20 border rounded px-2 py-1 dark:bg-gray-700 dark:text-white" />
-            <button
+            <button (click)="addProduct()"
                 class="cursor-pointer text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-6 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                 Add to Cart
             </button>
-            <button
-                class="cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Buy Now
-            </button>
         </div>
+
     </div>
 </div>

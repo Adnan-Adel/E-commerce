@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { inject, Injectable, signal } from '@angular/core';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
 
 
@@ -10,11 +10,17 @@ import { environment } from '../../../../environments/environment.development';
 export class CartService {
   private httpClient : HttpClient = inject(HttpClient);
 
+  cartCount = signal<number>(0);
+
   addToCart(pId:string):Observable<any> {
     return this.httpClient.post(`${environment.baseURL}cart`,
       {
         productId:pId
       }
+    ).pipe(
+       tap((res: any) => {
+        this.cartCount.set(res.numOfCartItems);
+      })
     );
   }
 
@@ -33,10 +39,15 @@ export class CartService {
 
   removeSpecificProduct(pId:string): Observable<any> {
     return this.httpClient.delete(`${environment.baseURL}cart/${pId}`
-    )
+    ).pipe(
+       tap((res: any) => {
+        this.cartCount.set(res.numOfCartItems);
+      })
+    );
   }
 
   clearAllCart(): Observable<any> {
+    this.cartCount.set(0);
     return this.httpClient.delete(`${environment.baseURL}cart`
     )
   }

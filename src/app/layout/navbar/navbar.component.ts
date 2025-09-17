@@ -2,6 +2,8 @@ import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth/auth.service';
 import { TranslatePipe, TranslateDirective, TranslateService } from '@ngx-translate/core';
+import { WishlistService } from '../../core/services/wishlist/wishlist.service';
+import { CartService } from '../../core/services/cart/cart.service';
 
 
 @Component({
@@ -14,6 +16,8 @@ export class NavbarComponent {
   private auth: AuthService = inject(AuthService);
   private router: Router = inject(Router);
   private translate = inject(TranslateService);
+  wishlistService = inject(WishlistService);
+  cartService = inject(CartService);
 
   isLoggedIn = signal<boolean>(false);
 
