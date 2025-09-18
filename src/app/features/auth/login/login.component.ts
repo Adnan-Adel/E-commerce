@@ -17,7 +17,6 @@ export class LoginComponent {
   private router: Router = inject(Router);
 
   errorMessage = signal<string>('');
-  isLoading = signal<boolean>(false);
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
@@ -27,11 +26,9 @@ export class LoginComponent {
 
   submitForm() {
     if (this.loginForm.valid) {
-      this.isLoading.set(true);
       this.auth.loginAPI(this.loginForm.value).subscribe({
         next: (res) => {
           if (res.message == "success") {
-            this.isLoading.set(false);
             
             // store token in local storage
             localStorage.setItem("userToken", res.token);
@@ -44,7 +41,6 @@ export class LoginComponent {
           }
         },
         error: (err) => {
-          this.isLoading.set(false);
           this.errorMessage.set(err.error.message);
         }
       })

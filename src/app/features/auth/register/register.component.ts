@@ -18,7 +18,6 @@ export class RegisterComponent {
   private router : Router = inject(Router);
 
   errorMessage = signal<string>('');
-  isLoading = signal<boolean>(false);
 
   registerForm: FormGroup = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
@@ -39,17 +38,14 @@ export class RegisterComponent {
 
   submitForm() {
     if (this.registerForm.valid) {
-      this.isLoading.set(true);
       this.auth.registerAPI(this.registerForm.value).subscribe({
         next : (res)=> {
           if(res.message == "success") {
-            this.isLoading.set(false);
             // programming routing
             this.router.navigate(['/login']);
           }
         },
         error : (err)=> {
-          this.isLoading.set(false);
           this.errorMessage.set(err.error.message);
         }
       })

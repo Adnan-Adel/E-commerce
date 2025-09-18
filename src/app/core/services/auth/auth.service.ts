@@ -1,10 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
 import { jwtDecode } from "jwt-decode";
 import { User } from '../../interfaces/user';
 import { PlatformService } from '../platform/platform.service';
+import { CartService } from '../cart/cart.service';
+import { WishlistService } from '../wishlist/wishlist.service';
 
 
 @Injectable({
@@ -14,6 +16,8 @@ export class AuthService {
 
   private httpClient: HttpClient = inject(HttpClient);
   private platformService: PlatformService = inject(PlatformService);
+  private wishlistService: WishlistService = inject(WishlistService);
+  private cartService: CartService = inject(CartService);
 
   userData = new BehaviorSubject<any>(null);
 
@@ -30,7 +34,13 @@ export class AuthService {
   }
 
   loginAPI(registerData: object): Observable<any> {
-    return this.httpClient.post(`${environment.baseURL}auth/signin`, registerData);
+    return this.httpClient.post(`${environment.baseURL}auth/signin`, registerData).pipe(
+      tap((res: any) => {
+        localStorage.setItem('userToken', res.token);
+        this.cartService.getAllCart().subscribe();
+        this.wishlistService.getLoggedUserWishlist().subscribe();
+      })
+    );;
   }
 
   setUserData() {

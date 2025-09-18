@@ -8,39 +8,42 @@ import { environment } from '../../../../environments/environment.development';
   providedIn: 'root'
 })
 export class CartService {
-  private httpClient : HttpClient = inject(HttpClient);
+  private httpClient: HttpClient = inject(HttpClient);
 
   cartCount = signal<number>(0);
 
-  addToCart(pId:string):Observable<any> {
+  addToCart(pId: string): Observable<any> {
     return this.httpClient.post(`${environment.baseURL}cart`,
       {
-        productId:pId
+        productId: pId
       }
     ).pipe(
-       tap((res: any) => {
+      tap((res: any) => {
         this.cartCount.set(res.numOfCartItems);
       })
     );
   }
 
-  updateCart(pId:string, pCount:number): Observable<any> {
+  updateCart(pId: string, pCount: number): Observable<any> {
     return this.httpClient.put(`${environment.baseURL}cart/${pId}`,
       {
-        count:pCount
+        count: pCount
       }
     )
   }
 
   getAllCart(): Observable<any> {
-    return this.httpClient.get(`${environment.baseURL}cart`
-    )
+    return this.httpClient.get(`${environment.baseURL}cart`).pipe(
+      tap((res: any) => {
+        this.cartCount.set(res.numOfCartItems);
+      })
+    );
   }
 
-  removeSpecificProduct(pId:string): Observable<any> {
+  removeSpecificProduct(pId: string): Observable<any> {
     return this.httpClient.delete(`${environment.baseURL}cart/${pId}`
     ).pipe(
-       tap((res: any) => {
+      tap((res: any) => {
         this.cartCount.set(res.numOfCartItems);
       })
     );

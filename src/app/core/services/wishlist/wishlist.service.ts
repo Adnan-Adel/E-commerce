@@ -32,7 +32,11 @@ export class WishlistService {
     )
   }
   getLoggedUserWishlist(): Observable<any> {
-    return this.httpClient.get(`${environment.baseURL}wishlist`)
+    return this.httpClient.get(`${environment.baseURL}wishlist`).pipe(
+      tap((res:any)=>{
+        this.wishlist.set(res.data.map((item:any)=>item._id));
+      })
+    )
   }
 
   isInWishlist(pId: string) {
